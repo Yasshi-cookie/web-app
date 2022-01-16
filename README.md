@@ -1,10 +1,12 @@
 # Start
-1. `$ docker compose up -d --build`
-2. `$ docker compose exec app bash`
-3. `$ composer install`
-4. `$ cp .env.example .env`
+1. docker起動 `$ docker compose up -d --build`
+2. vendorディレクトリ郡をインストール
+    1. `$ docker compose exec app bash`
+    2. `$ composer install`
+3. 環境変数ファイルを作成（コピー） `$ cp .env.example .env`
 
 ## エラーが出たら
+下記を実行してみる
 - `$ php artisan key:generate`
 - `$ php artisan storage:link`
 - `$ chmod -R 777 storage bootstrap/cache`
@@ -13,19 +15,19 @@
 `$ docker-compose down --rmi all --volumes --remove-orphans`
 
 # ディレクトリ構成
-├── README.md
-├── infra
-│   ├── mysql
-│   │   ├── Dockerfile
-│   │   └── my.cnf
-│   ├── nginx
-│   │   └── default.conf
-│   └── php
-│       ├── Dockerfile
-│       └── php.ini
-├── docker-compose.yml
-└── backend
-    └── Laravelアプリケーション
+- backend
+    - Laravel-app
+- infra
+    - mysql
+        - Dockerfile
+        - my.cnf
+    - nginx
+        - default.conf
+    - php
+        - Dockerfile
+        - php.ini
+- docker-compose.yml
+- README.md
 
 # 参考
 https://qiita.com/ucan-lab/items/56c9dc3cf2e6762672f4
