@@ -1,9 +1,11 @@
 # Start
 1. docker起動 `$ docker compose up -d --build`
-2. vendorディレクトリ郡をインストール
+1. vendorディレクトリ郡をインストール
     1. `$ docker compose exec app bash`
     2. `$ composer install`
-3. 環境変数ファイルを作成（コピー） `$ cp .env.example .env`
+    3. laravelcollective/htmlが入っていなければ、run `$ composer require "laravelcollective/html"`
+1. 環境変数ファイルを作成（コピー） `$ cp .env.example .env`
+1.
 
 ## エラーが出たら
 下記を実行してみる
