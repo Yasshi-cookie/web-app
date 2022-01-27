@@ -161,12 +161,23 @@ class RationalMath
      */
     public static function devide_rat(self $rat_a, self $rat_b): self
     {
-        $denominator_b = $rat_b->getDenominator();
-        $numerator_b   = $rat_b->getNumerator();
+        $invers_rat_b = self::inverse($rat_b);
+        return self::product_rat($rat_a, $invers_rat_b);
+    }
 
-        $rat_b->setDenominator($numerator_b);
-        $rat_b->setNumerator($denominator_b);
-        return self::product_rat($rat_a, $rat_b);
+    /**
+     * 逆数を返す
+     *
+     * @param self $rat
+     * @return self|bool
+     */
+    public static function inverse(self $rat)
+    {
+        if ($rat->numerator === 0) {
+            return false;
+        }
+
+        return new self($rat->numerator, $rat->denominator);
     }
 
     /**
@@ -226,3 +237,9 @@ class RationalMath
         }
     }
 }
+
+// $rat_a = new RationalMath(12, 5);
+// $rat_b = new RationalMath(3, 10);
+
+// echo RationalMath::devide_rat($rat_a, $rat_b)->display();
+// echo "\n";
