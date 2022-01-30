@@ -129,8 +129,7 @@ class RationalMath
      */
     public static function sub_rat(self $rat_a, self $rat_b): self
     {
-        $rat_b->setNumerator((-1) * $rat_b->numerator);
-        return self::add_rat($rat_a, $rat_b);
+        return self::add_rat($rat_a, self::minus($rat_b));
     }
 
     /**
@@ -161,8 +160,19 @@ class RationalMath
      */
     public static function devide_rat(self $rat_a, self $rat_b): self
     {
-        $invers_rat_b = self::inverse($rat_b);
-        return self::product_rat($rat_a, $invers_rat_b);
+        return self::product_rat($rat_a, self::inverse($rat_b));
+    }
+
+    /**
+     * (-1) * $rat を返す
+     *
+     * @param self $rat
+     * @return self
+     */
+    public static function minus(self $rat): self
+    {
+        $rat->setNumerator((-1) * $rat->numerator);
+        return $rat;
     }
 
     /**
