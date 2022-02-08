@@ -13,5 +13,4 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [App\Http\Controllers\TopController::class, 'index']);
-Route::post('/', [App\Http\Controllers\TopController::class, 'post']);
+Route::get('/', [App\Http\Controllers\TopController::class, 'index'])->name('top');
