@@ -1,6 +1,6 @@
 @extends('layouts.default')
 
-@section('title', 'Top')
+@section('title', 'おもちゃ箱')
 
 @section('content')
 <ul>

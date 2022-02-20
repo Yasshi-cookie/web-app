@@ -2,6 +2,8 @@
 
 namespace App\Math;
 
+// use App\Math\Math;
+
 class RationalMath
 {
     /**
@@ -15,7 +17,7 @@ class RationalMath
     private int $numerator;
 
     /**
-     * 表示用URL
+     * LaTeX表示用URL
      */
     private const DISPLAY_BASE_URL = "https://render.githubusercontent.com/render/math?math=";
 
