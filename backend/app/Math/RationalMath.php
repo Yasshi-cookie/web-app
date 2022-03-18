@@ -2,9 +2,11 @@
 
 namespace App\Math;
 
-// use App\Math\Math;
+require_once __DIR__ . "/../../vendor/autoload.php";
 
-class RationalMath
+use Exception;
+
+class RationalMath extends Math
 {
     /**
      * 分母
@@ -17,11 +19,6 @@ class RationalMath
     private int $numerator;
 
     /**
-     * LaTeX表示用URL
-     */
-    private const DISPLAY_BASE_URL = "https://render.githubusercontent.com/render/math?math=";
-
-    /**
      * コンストラクター
      *
      * @param int $denominator
@@ -29,11 +26,9 @@ class RationalMath
      */
     public function __construct(int $denominator, int $numerator)
     {
-        if ($numerator === 0) {
-            return false;
-        }
-        $this->denominator = $denominator;
-        $this->numerator = $numerator;
+        $this->setDenominator($denominator);
+        $this->setNumerator($numerator);
+
         // 既約分数にする
         $this->reduce();
         // 標準化する
@@ -75,6 +70,9 @@ class RationalMath
      */
     public function setDenominator(int $denominator)
     {
+        if ($denominator === 0) {
+            throw new Exception('分母に0を指定することはできません。');
+        }
         $this->denominator = $denominator;
     }
 
@@ -95,8 +93,15 @@ class RationalMath
      */
     public function display()
     {
+        $numerator = $this->numerator;
+        $denominator = $this->denominator;
+
         $get_param = '\displaystyle \frac{' . $this->numerator . '}{' . $this->denominator . '}';
-        return self::DISPLAY_BASE_URL . rawurlencode($get_param);
+        if ($numerator % $denominator === 0) {
+            $get_param = '\displaystyle ' . $numerator / $denominator;
+        }
+
+        return self::DISPLAY_BASE_URL . urlencode($get_param);
     }
 
     /**
@@ -162,7 +167,7 @@ class RationalMath
      */
     public static function devide_rat(self $rat_a, self $rat_b): self
     {
-        return self::product_rat($rat_a, self::inverse($rat_b));
+        return self::product_rat($rat_a, $rat_b->inverse());
     }
 
     /**
@@ -180,16 +185,15 @@ class RationalMath
     /**
      * 逆数を返す
      *
-     * @param self $rat
-     * @return self|bool
+     * @return self|Exception
      */
-    public static function inverse(self $rat)
+    public function inverse()
     {
-        if ($rat->numerator === 0) {
-            return false;
+        if ($this->numerator === 0) {
+            throw new Exception('分子が0である分数を逆数にすることはできません。');
         }
 
-        return new self($rat->numerator, $rat->denominator);
+        return new self($this->numerator, $this->denominator);
     }
 
     /**
@@ -215,13 +219,13 @@ class RationalMath
      */
     private function reduce()
     {
-        $denominator = $this->denominator;
-        $numerator = $this->numerator;
+        $denominator = $this->getDenominator();
+        $numerator = $this->getNumerator();
 
-        $gcd = $this->gcd($denominator, $numerator);
+        $gcd = $this->gcd($numerator, $denominator);
 
-        $this->denominator = $denominator / $gcd;
-        $this->numerator = $numerator / $gcd;
+        $this->setDenominator($denominator / $gcd);
+        $this->setNumerator($numerator / $gcd);
     }
 
     /**
@@ -250,7 +254,8 @@ class RationalMath
     }
 }
 
-// $rat_a = new RationalMath(12, 5);
+// $rat_a = new RationalMath(3, 1);
+// echo $rat_a->display();
 // $rat_b = new RationalMath(3, 10);
 
 // echo RationalMath::devide_rat($rat_a, $rat_b)->display();
