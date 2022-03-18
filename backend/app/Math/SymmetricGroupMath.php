@@ -2,10 +2,12 @@
 
 namespace App\Math;
 
+require_once "./vendor/autoload.php";
+
 use Exception;
 // use App\Math\Math;
 
-class SymmetricGroupMath
+class SymmetricGroupMath extends Math
 {
     /**
      * 次元
@@ -20,15 +22,6 @@ class SymmetricGroupMath
      * @var array
      */
     private array $map;
-
-    /**
-     * LaTeX表示用URL
-     */
-    private const DISPLAY_BASE_URL = "https://render.githubusercontent.com/render/math?math=";
-
-    public const URL_ENCODE_SPACE = "%20";
-    public const URL_ENCODE_AND = "%26";
-
 
     /**
      * constructor
